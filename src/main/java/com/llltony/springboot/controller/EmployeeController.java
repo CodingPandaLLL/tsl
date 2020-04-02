@@ -6,7 +6,6 @@ import com.llltony.springboot.bean.EmployeeVo;
 import com.llltony.springboot.bean.ResultMap;
 import com.llltony.springboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +19,8 @@ public class EmployeeController {
 
     //增加学生
     @RequestMapping(value = "/saveEmp", method = RequestMethod.POST)
-    public ResultMap saveEmp(@RequestBody EmployeeVo employeeVo)  {
-        ResultMap resultMap=new ResultMap();
+    public ResultMap saveEmp(@RequestBody EmployeeVo employeeVo) {
+        ResultMap resultMap = new ResultMap();
         try {
             employeeService.saveEmp(employeeVo);
             resultMap.setStatus("200");
@@ -36,7 +35,7 @@ public class EmployeeController {
     //删除学生
     @DeleteMapping("/delEmp/{ids}")
     public ResultMap delEmp(@PathVariable("ids") String ids) {
-        ResultMap resultMap=new ResultMap();
+        ResultMap resultMap = new ResultMap();
         try {
             employeeService.delEmp(ids);
             resultMap.setStatus("200");
@@ -63,7 +62,7 @@ public class EmployeeController {
     //修改学生
     @PutMapping("/updateEmp")
     public ResultMap updateEmp(@RequestBody Employee employee) {
-        ResultMap resultMap=new ResultMap();
+        ResultMap resultMap = new ResultMap();
         try {
             employeeService.updateEmp(employee);
             resultMap.setStatus("200");
