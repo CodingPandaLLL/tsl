@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>websocket_Test</title>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="This is my page">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="no-cache" http-equiv="cache-control">
+    <meta content="0" http-equiv="expires">
+    <meta content="keyword1,keyword2,keyword3" http-equiv="keywords">
+    <meta content="This is my page" http-equiv="description">
 </head>
-<body onload="web();">
+<body>
 <div>
     <h3>testing...</h3>
     <div id="msgtext">
-
     </div>
     <div>
-        <input type="text" name="msg" id="msg"/>
+        <input id="username" name="username" type="text" placeholder="请输入用户名"/>
+        <button onclick="connectWebSocket();">连接WebSocket</button>
+        <br>
+        <input id="msg" name="msg" type="text" placeholder="请输入发生信息"/>
         <button onclick="sendmsg();">发送</button>
-        <br/>
-        <input type="file" name="bmsg" id="bmsg"/>
-        <button onclick="sendbmsg();">发送</button>
     </div>
 </div>
 
 </body>
 <script type="text/javascript">
       var ws;
-      function web(){
+      function connectWebSocket(){
           if('WebSocket' in window){
-              ws = new WebSocket("ws://localhost:8080/websocket/web");
+              var url="ws://localhost:8080/websocket/";
+              var username=$('#username').val();
+              if(username=="" || username==null){
+                alert("请输入用户名");
+                return;
+              }else{
+                url=url+username;
+              }
+              ws = new WebSocket(url);
           }else{
               alert("不支持 websocket");
           }
@@ -67,29 +75,13 @@
           ws.onerror = function(evt){
               alert("error");
           }
-              }
-          function sendmsg(){
-              ws.send("游客&nbsp;("+new Date().toLocaleTimeString()+")<br />"+document.getElementById("msg").value);
-          }
-          function sendbmsg(){
-        var inputElement = document.getElementById("bmsg");
-        var fileList = inputElement.files;
-
-        for ( var i = 0; i < fileList.length; i++) {
-            //发送
-            ws.send("游客&nbsp;("+new Date().toLocaleTimeString()+")");
-            //读取文件　　
-　　　　　        var reader = new FileReader();
-            reader.readAsArrayBuffer(fileList[i]);
-            //文件读取完毕后该函数响应
-            reader.onload = function loaded(evt) {
-                var binaryString = evt.target.result;
-                ws.send(binaryString);
-            }
-        }
-        return false;
-          }
-
+      }
+      function sendmsg(){
+          var message={};
+          message.content="("+new Date().toLocaleTimeString()+")<br />"+document.getElementById("msg").value;
+          message.username=$('#username').val();
+          ws.send(JSON.stringify(message));
+      }
 
 </script>
 </html>

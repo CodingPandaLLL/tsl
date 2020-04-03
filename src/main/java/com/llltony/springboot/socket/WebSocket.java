@@ -1,7 +1,7 @@
 package com.llltony.springboot.socket;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -11,7 +11,6 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 
 /**
  * @ServerEndpoint 这个注解有什么作用？
@@ -47,23 +46,25 @@ public class WebSocket {
         this.name = name;
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name, this);
-        log.info("[WebSocket] 连接成功，当前连接人数为：={}", webSocketSet.size());
+        log.info(name+"[WebSocket] 连接成功，当前连接人数为：={}", webSocketSet.size());
     }
 
 
     @OnClose
     public void OnClose() {
         webSocketSet.remove(this.name);
-        log.info("[WebSocket] 退出成功，当前连接人数为：={}", webSocketSet.size());
+        log.info(name+"[WebSocket] 退出成功，当前连接人数为：={}", webSocketSet.size());
     }
 
     @OnMessage
     public void OnMessage(String message) {
         log.info("[WebSocket] 收到消息：{}", message);
-        //判断是否需要指定发送，具体规则自定义
-        if (message.indexOf("TOUSER") == 0) {
-            String name = message.substring(message.indexOf("TOUSER") + 6, message.indexOf(";"));
-            AppointSending(name, message.substring(message.indexOf(";") + 1, message.length()));
+        //根据用户名判断知道发送
+        JSONObject json = JSONObject.parseObject(message);
+        String name=json.get("username").toString();
+        String content=json.get("content").toString();
+        if (!name.equals("") && name!= null) {
+            AppointSending(name, content);
         } else {
             GroupSending(message);
         }
