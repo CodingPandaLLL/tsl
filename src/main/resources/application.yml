@@ -38,5 +38,4 @@ logging:
   level:
     com:
       llltony:
-        springboot:
-          dao: debug
+        springboot: debug
