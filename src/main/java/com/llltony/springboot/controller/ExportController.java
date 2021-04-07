@@ -25,7 +25,7 @@ public class ExportController {
     EmployeeService employeeService;
 
 
-    //查询学生
+    //导出学生
     @GetMapping("/export")
     public void getEmp() {
 
