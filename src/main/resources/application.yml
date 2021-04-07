@@ -1,3 +1,6 @@
+server:
+  port: 8181
+  context-path: /tsl
 spring:
   datasource:
 #   数据源基本配置
