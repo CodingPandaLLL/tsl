@@ -149,36 +149,22 @@ public class ExcelExport {
         Font font = workbook.createFont();
         // 设置字体大小
         font.setFontHeightInPoints((short) 11);
-        // 字体加粗
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 设置字体名字
         font.setFontName("Courier New");
         // 设置样式;
         CellStyle style = workbook.createCellStyle();
-        // 设置底边框;
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         // 设置底边框颜色;
         style.setBottomBorderColor(HSSFColor.BLACK.index);
-        // 设置左边框;
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         // 设置左边框颜色;
         style.setLeftBorderColor(HSSFColor.BLACK.index);
-        // 设置右边框;
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
         // 设置右边框颜色;
         style.setRightBorderColor(HSSFColor.BLACK.index);
-        // 设置顶边框;
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
         // 设置顶边框颜色;
         style.setTopBorderColor(HSSFColor.BLACK.index);
         // 在样式用应用设置的字体;
         style.setFont(font);
         // 设置自动换行;
         style.setWrapText(false);
-        // 设置水平对齐的样式为居中对齐;
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        // 设置垂直对齐的样式为居中对齐;
-        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         return style;
     }
 
@@ -186,10 +172,6 @@ public class ExcelExport {
     private static CellStyle getBodyStyle(SXSSFWorkbook workbook) {
         // 创建单元格样式
         CellStyle cellStyle = workbook.createCellStyle();
-        // 设置单元格居中对齐
-        cellStyle.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-        // 设置单元格居中对齐
-        cellStyle.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);
         // 创建单元格内容不显示自动换行
         cellStyle.setWrapText(false);
         // 设置单元格字体样式
@@ -197,11 +179,6 @@ public class ExcelExport {
         font.setFontName("Courier New");// 设置字体
         font.setFontHeight(11);// 设置字体的大小
         cellStyle.setFont(font);// 将字体添加到表格中去
-        // 设置单元格边框为细线条
-        cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
-        cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
         return cellStyle;
     }
 }
