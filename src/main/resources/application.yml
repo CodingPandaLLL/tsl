@@ -2,6 +2,16 @@ server:
   port: 8181
   context-path: /tsl
 spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 1
+        max-active: 8
+        max-wait: -1
   datasource:
 #   数据源基本配置
     username: root

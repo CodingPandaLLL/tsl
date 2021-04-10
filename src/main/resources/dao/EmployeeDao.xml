@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llltony.springboot.dao.EmployeeDao">
+    <cache type="com.llltony.springboot.utils.RedisCache" />
     <!--    public Employee getEmpById(Integer id);
 
      public void insertEmp(Employee employee);-->

@@ -1,8 +1,9 @@
 package com.llltony.springboot.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class EmployeeVo{
+public class EmployeeVo implements Serializable {
 
     List<Employee>  employeeLst;
 

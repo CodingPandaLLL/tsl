@@ -6,5 +6,11 @@
 
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 打开延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 将积极加载改为消极加载即按需要加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 开启二级缓存(默认也是开启的)-->
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 </configuration>
