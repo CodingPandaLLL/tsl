@@ -48,14 +48,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void saveEmp(EmployeeVo employeelll) {
-
-        int n = employeelll.getEmployeeLst().size();
+    public void saveEmp(EmployeeVo employeeVo) {
+        int n = employeeVo.getEmployeeLst().size();
         if (n > 1) {
-            List<Employee> employeeLst = employeelll.getEmployeeLst();
+            List<Employee> employeeLst = employeeVo.getEmployeeLst();
             employeeDao.saveEmpLst(employeeLst);
         } else {
-            employeeDao.saveEmp(employeelll.getEmployeeLst().get(0));
+            employeeDao.saveEmpLst(employeeVo.getEmployeeLst());
         }
     }
 
