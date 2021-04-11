@@ -1,4 +1,4 @@
-package com.llltony.springboot.aspect;
+package com.llltony.springboot.listener;
 
 import com.llltony.springboot.utils.JacksonUtil;
 import org.apache.ibatis.javassist.*;
@@ -33,7 +33,7 @@ import java.util.Map;
 @Aspect
 public class RequestLog {
 
-    private static final Logger logger = Logger.getLogger(com.llltony.springboot.aspect.RequestLog.class);
+    private static final Logger logger = Logger.getLogger(com.llltony.springboot.listener.RequestLog.class);
 
     private String requestPath = null; //接口地址
     private String requestIp = null; //接口Ip
