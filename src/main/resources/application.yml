@@ -2,12 +2,17 @@ server:
   port: 8181
   context-path: /tsl
 spring:
+  resources:
+    static-locations: classpath:static/
   #配置rabbitMq 服务器
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        auto-startup: false
   aop:
     auto: true
     proxy-target-class: true
