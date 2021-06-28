@@ -1,6 +1,6 @@
 server:
   port: 8181
-  context-path: /tsl
+#  context-path: /tsl
 spring:
   resources:
     static-locations: classpath:static/
