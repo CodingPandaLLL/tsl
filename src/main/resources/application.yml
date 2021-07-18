@@ -2,8 +2,8 @@ server:
   port: 8181
 #  context-path: /tsl
 spring:
-  resources:
-    static-locations: classpath:static/
+#  resources:
+#    static-locations: classpath:html/
   #配置rabbitMq 服务器
   rabbitmq:
     host: 127.0.0.1
@@ -31,7 +31,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/llltony
+    url: jdbc:mysql://127.0.0.1:3306/llltony?serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
 #   数据源其他配置
     initialSize: 5
@@ -66,3 +66,4 @@ logging:
     com:
       llltony:
         springboot: debug
+swagger: true
