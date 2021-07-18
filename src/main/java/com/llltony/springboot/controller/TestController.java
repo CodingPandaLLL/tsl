@@ -2,20 +2,15 @@ package com.llltony.springboot.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.llltony.springboot.bean.EmployeeVo;
 import com.llltony.springboot.bean.Jgdwzc;
 import com.llltony.springboot.bean.Ml;
 import com.llltony.springboot.bean.ResultMap;
 import com.llltony.springboot.utils.JacksonUtil;
-import org.apache.poi.ss.formula.functions.T;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * 测试类
@@ -25,6 +20,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/")
+@Api(tags = "测试模块")
 public class TestController {
 
 
@@ -39,7 +35,8 @@ public class TestController {
 
     //post测试
     @RequestMapping(value = "/Catalog/CreateCataLog", method = RequestMethod.POST)
-    public ResultMap addRebbitMq(@RequestBody Ml jsonObject) {
+    @ApiOperation(value="测试请求CreateCataLog",notes = "测试请求CreateCataLog")
+    public ResultMap addRebbitMq(@RequestBody  @ApiParam(required = true, value = "Ml")  Ml jsonObject) {
         ResultMap resultMap = new ResultMap();
         resultMap.setStatus("200");
         resultMap.setMessage("请求成功");
@@ -49,7 +46,8 @@ public class TestController {
 
     //post测试
     @RequestMapping(value = "/Supply/CreateOrg", method = RequestMethod.POST)
-    public JSONObject CreateOrg(@RequestBody Jgdwzc jsonObject) throws JSONException {
+    @ApiOperation(value="测试请求CreateOrg",notes = "测试请求CreateOrg")
+    public JSONObject CreateOrg(@RequestBody  @ApiParam(required = true, value = "Jgdwzc")  Jgdwzc jsonObject) throws JSONException {
         JSONObject jSONObject = new JSONObject();
         JSONObject jSONObject1 = new JSONObject();
         jSONObject.put("code", 1);

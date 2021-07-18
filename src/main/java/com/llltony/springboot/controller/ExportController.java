@@ -3,10 +3,11 @@ package com.llltony.springboot.controller;
 
 import com.llltony.springboot.service.EmployeeService;
 import com.llltony.springboot.utils.ExcelExport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/excel")
+@Api(tags = "导出员工模块")
 public class ExportController {
 
     @Autowired(required = false)
@@ -27,9 +29,8 @@ public class ExportController {
 
     //导出学生
     @GetMapping("/export")
+    @ApiOperation(value="导出员工信息",notes = "导出员工信息")
     public void getEmp() {
-
-
         long startTime = System.currentTimeMillis();
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

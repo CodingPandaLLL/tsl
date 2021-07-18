@@ -87,7 +87,7 @@ public class RequestLog {
         outputParamMap = new HashMap<String, Object>();
         Object result = pjp.proceed();// result的值就是被拦截方法的返回值
         outputParamMap.put("请求结果： ", result);
-
+        logger.info(JacksonUtil.toJsonString(outputParamMap));
         return result;
     }
 
@@ -99,7 +99,7 @@ public class RequestLog {
         logger.info("请求ip：" + requestIp + "  接口地址：" + requestPath);
         logger.info("开始时间：" + optTime + " 用时：" + (endTimeMillis - startTimeMillis) + "ms ;");
         logger.info(" 请求参数：" + JacksonUtil.toJsonString(inputParamMap) + ";");
-        logger.info(JacksonUtil.toJsonString(outputParamMap));
+
     }
 
 
