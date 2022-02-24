@@ -1,6 +1,7 @@
 package com.llltony.springboot.listener;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RabbitListener(queues = "EmployeeDirectQueue")//监听的队列名称 EmployeeDirectQueue
 public class DirectReceiver {
 
-    private static final Logger logger = Logger.getLogger(com.llltony.springboot.service.Impl.EmployeeServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(com.llltony.springboot.service.Impl.EmployeeServiceImpl.class);
 
     @RabbitHandler
     public void process(Map testMessage) {

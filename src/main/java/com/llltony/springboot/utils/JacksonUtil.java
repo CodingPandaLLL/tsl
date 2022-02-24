@@ -5,7 +5,8 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -18,7 +19,7 @@ import java.io.Writer;
  */
 public class JacksonUtil {
 
-    private static final Logger logger = Logger.getLogger(com.llltony.springboot.utils.JacksonUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(com.llltony.springboot.utils.JacksonUtil.class);
 
     private JacksonUtil() {
     }

@@ -6,7 +6,8 @@ import com.llltony.springboot.dao.EmployeeDao;
 import com.llltony.springboot.service.EmployeeService;
 import com.llltony.springboot.utils.JacksonUtil;
 import com.llltony.springboot.utils.RedisUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Resource
     private RedisUtil redisUtil;
 
-    private static final Logger logger = Logger.getLogger(com.llltony.springboot.service.Impl.EmployeeServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(com.llltony.springboot.service.Impl.EmployeeServiceImpl.class);
 
     @Override
     public Employee getEmpById(Integer id) throws IOException {

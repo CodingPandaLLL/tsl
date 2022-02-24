@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class SerializeUtils {
 
-    //private static final Logger logger = Logger.getLogger(SerializeUtils.class);
+    //private static final Logger logger = LoggerFactory.getLogger(SerializeUtils.class);
 
     private static void close(ObjectOutputStream objectOutputStream, ByteArrayOutputStream byteArrayOutputStream) {
         try {

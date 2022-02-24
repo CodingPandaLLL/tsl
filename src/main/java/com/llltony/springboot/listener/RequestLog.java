@@ -5,13 +5,14 @@ import org.apache.ibatis.javassist.*;
 import org.apache.ibatis.javassist.bytecode.CodeAttribute;
 import org.apache.ibatis.javassist.bytecode.LocalVariableAttribute;
 import org.apache.ibatis.javassist.bytecode.MethodInfo;
-import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -33,7 +34,7 @@ import java.util.Map;
 @Aspect
 public class RequestLog {
 
-    private static final Logger logger = Logger.getLogger(com.llltony.springboot.listener.RequestLog.class);
+    private static final Logger logger = LoggerFactory.getLogger(com.llltony.springboot.listener.RequestLog.class);
 
     private String requestPath = null; //接口地址
     private String requestIp = null; //接口Ip
