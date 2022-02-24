@@ -1,5 +1,8 @@
 package com.cpl.tsl.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -9,6 +12,8 @@ import java.io.*;
  * @date: 2022年02月11日 14:02:26
  */
 public class WriteToFile {
+
+    private static final Logger logger = LoggerFactory.getLogger(WriteToFile.class);
 
     /**
      * FileWritter写入文件
@@ -29,7 +34,7 @@ public class WriteToFile {
             fileWritter.write(data);
             fileWritter.close();
 
-            System.out.println("Done");
+            logger.info("Done");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,7 +61,7 @@ public class WriteToFile {
             bw.write(content);
             bw.close();
 
-            System.out.println("Done");
+            logger.info("Done");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,7 +94,7 @@ public class WriteToFile {
             fop.flush();
             fop.close();
 
-            System.out.println("Done");
+            logger.info("Done");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,7 +133,7 @@ public class WriteToFile {
             fop1.flush();
             fop1.close();
 
-            System.out.println("Done");
+            logger.info("Done");
 
         } catch (IOException e) {
             e.printStackTrace();

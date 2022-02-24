@@ -9,7 +9,10 @@ import com.cpl.tsl.utils.JacksonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.formula.functions.T;
 import org.json.JSONException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 @Api(tags = "测试模块")
 public class TestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
 
     //get测试
@@ -40,7 +45,7 @@ public class TestController {
         ResultMap resultMap = new ResultMap();
         resultMap.setStatus("200");
         resultMap.setMessage("请求成功");
-        System.out.println(JacksonUtil.toJsonString(jsonObject));
+        logger.info(JacksonUtil.toJsonString(jsonObject));
         return resultMap;
     }
 

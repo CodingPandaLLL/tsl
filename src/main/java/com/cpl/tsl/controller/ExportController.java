@@ -6,6 +6,8 @@ import com.cpl.tsl.utils.ExcelExport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class ExportController {
     @Autowired(required = false)
     EmployeeService employeeService;
 
+    private static final Logger logger = LoggerFactory.getLogger(ExportController.class);
+
 
     //导出学生
     @GetMapping("/export")
@@ -41,7 +45,7 @@ public class ExportController {
         String kkk = "123";
         ExcelExport.writeToResponse(workbook, request, response, kkk);
         long endTime = System.currentTimeMillis();
-        System.out.println("运行时间:" + (endTime - startTime) + "ms");
+        logger.info("运行时间:" + (endTime - startTime) + "ms");
     }
 
     public SXSSFWorkbook getCameraListExcel() {

@@ -1,6 +1,8 @@
 package com.cpl.tsl.utils;
 
 import org.apache.ibatis.cache.Cache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -14,6 +16,9 @@ public class RedisCache implements Cache {
     private final String id; // cache instance id
     private RedisTemplate redisTemplate;
     private static final long EXPIRE_TIME_IN_MINUTES = 30; // redis过期时间
+
+
+    private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
 
     public RedisCache(String id) {
         if (id == null) {
@@ -39,7 +44,7 @@ public class RedisCache implements Cache {
         RedisTemplate redisTemplate = getRedisTemplate();
         ValueOperations opsForValue = redisTemplate.opsForValue();
         opsForValue.set(key, value, EXPIRE_TIME_IN_MINUTES, TimeUnit.MINUTES);
-        System.out.println("放入结果到缓存");
+        logger.info("放入结果到缓存");
     }
 
     /**
@@ -52,7 +57,7 @@ public class RedisCache implements Cache {
     public Object getObject(Object key) {
         RedisTemplate redisTemplate = getRedisTemplate();
         ValueOperations opsForValue = redisTemplate.opsForValue();
-        System.out.println("获取结果从缓存");
+        logger.info("获取结果从缓存");
         return opsForValue.get(key);
     }
 
@@ -67,7 +72,7 @@ public class RedisCache implements Cache {
     public Object removeObject(Object key) {
         RedisTemplate redisTemplate = getRedisTemplate();
         redisTemplate.delete(key);
-        System.out.println("从缓存删除了");
+        logger.info("从缓存删除了");
         return null;
     }
 
@@ -81,7 +86,7 @@ public class RedisCache implements Cache {
             connection.flushDb();
             return null;
         });
-        System.out.println("清空缓存");
+        logger.info("清空缓存");
     }
 
     @Override
