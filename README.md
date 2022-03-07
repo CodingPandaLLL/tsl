@@ -21,7 +21,7 @@ tsl
 | ---------- | --------------------- | -------------------------------------- |
 | mysql        | 5.7.32-log             | https://www.mysql.com/                    |
 | redis        | Redis 3.0.500          | https://redis.io/                    |
-| rebitmq      | -         | https://www.rabbitmq.com/                  |
+| rebitmq      | 3.7.4     | https://www.rabbitmq.com/                  |
 
 ## 版本说明
 ### V1.0.0版本
