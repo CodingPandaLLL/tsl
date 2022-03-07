@@ -1,7 +1,7 @@
 # tsl
 `版本：v1.0.4`
 ## 简介
-tsl是基于springboot框架的一个基础框架。数据库端用到mysql，并集成了redis、rebbitM等中间件。接口文档集成swagger作为自动化接口文档调用和使用。<br/>
+tsl是基于springboot框架的一个基础框架。数据库端用到mysql，并集成了redis、rebbitMq等中间件。接口文档集成swagger作为自动化接口文档调用和使用。<br/>
 ## 框架介绍
 ### 代码结构
 ``` lua
@@ -20,8 +20,8 @@ tsl
 | 中间件       | 版本             | 官网                                   |
 | ---------- | --------------------- | -------------------------------------- |
 | mysql        | 5.7.32-log             | https://www.mysql.com/                    |
-| redis        | 5.7.32-log             | https://redis.io/                    |
-| rebitmq      | 5.7.32-log             | https://www.rabbitmq.com/                  |
+| redis        | -          | https://redis.io/                    |
+| rebitmq      | -         | https://www.rabbitmq.com/                  |
 
 ## 版本说明
 ### V1.0.0版本
