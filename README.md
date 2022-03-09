@@ -28,8 +28,8 @@ tsl
 | 中间件       | 版本             | 官网                                   |
 | ---------- | --------------------- | -------------------------------------- |
 | mysql        | 5.7.32-log             | https://www.mysql.com/                    |
-| redis        | -          | https://redis.io/                    |
-| rebitmq      | -         | https://www.rabbitmq.com/                  |
+| redis        | Redis 3.0.500          | https://redis.io/                    |
+| rebitmq      | 3.7.4     | https://www.rabbitmq.com/                  |
 
 ## 版本说明
 ### V1.0.0版本
