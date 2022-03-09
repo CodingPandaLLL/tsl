@@ -1,5 +1,13 @@
 # tsl
-`版本：v1.0.4`
+<p>
+    <a href="https://github.com/CodingPandaLLL/tsl/releases"><img src="https://img.shields.io/badge/版本-v1.0.4-brightgreen.svg" alt="版本" /></a>
+    <a href="https://github.com/CodingPandaLLL/tsl.git"><img src="https://img.shields.io/badge/github-tsl-blue.svg" alt="github" /></a>
+    <a href="https://github.com/CodingPandaLLL/tsl/releases"><img src="https://img.shields.io/badge/downloads-73.8k-brightgreen.svg" alt="downloads" /></a>
+    <a href="https://github.com/CodingPandaLLL/tsl/commits"><img src="https://img.shields.io/badge/lastcommit-20220307-brightgreen.svg" alt="lastcommit" /></a>
+    <a href="https://github.com/CodingPandaLLL"><img src="https://img.shields.io/badge/author-CodingPandaLLL-brightgreen.svg" alt="author" /></a>
+    <a href="https://www.cnblogs.com/LiLiliang/"><img src="https://img.shields.io/badge/博客-CodingPanda-blueviolet.svg" alt="博客" /></a>
+</p>
+
 ## 简介
 tsl是基于springboot框架的一个基础框架。数据库端用到mysql，并集成了redis、rebbitMq等中间件。接口文档集成swagger作为自动化接口文档调用和使用。<br/>
 ## 框架介绍
