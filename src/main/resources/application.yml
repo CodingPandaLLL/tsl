@@ -66,6 +66,6 @@ mybatis:
 logging:
   level:
     com:
-      llltony:
-        springboot: debug
+      cpl:
+        tsl: debug
 swagger: true

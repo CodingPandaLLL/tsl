@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cpl.tsl.dao.SysDataDictDao">
+    <resultMap id="BaseResultMap" type="com.cpl.tsl.bean.SysDataDict">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="desp" property="desp" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="f_id" property="fId" jdbcType="CHAR"/>
+        <result column="is_del" property="isDel" jdbcType="CHAR"/>
+        <result column="create_id" property="createId" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="CHAR"/>
+        <result column="update_id" property="updateId" jdbcType="CHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="CHAR"/>
+        <result column="version" property="version" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, code, desp, type, f_id, is_del, create_id, create_time, update_id, update_time,
+    version
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_data_dict
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectBySelective" resultType="com.cpl.tsl.bean.SysDataDict">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_data_dict
+        <where>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="desp != null">
+                and desp = #{desp,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="fId != null">
+                and f_id = #{fId,jdbcType=CHAR}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel,jdbcType=CHAR}
+            </if>
+            <if test="createId != null">
+                and create_id = #{createId,jdbcType=CHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=CHAR}
+            </if>
+            <if test="updateId != null">
+                and update_id = #{updateId,jdbcType=CHAR}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=CHAR}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=CHAR}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_data_dict
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.cpl.tsl.bean.SysDataDict">
+    insert into sys_data_dict (id, code, desp,
+      type, f_id, is_del, create_id,
+      create_time, update_id, update_time,
+      version)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{desp,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{fId,jdbcType=CHAR}, #{isDel,jdbcType=CHAR}, #{createId,jdbcType=CHAR},
+      #{createTime,jdbcType=CHAR}, #{updateId,jdbcType=CHAR}, #{updateTime,jdbcType=CHAR},
+      #{version,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.cpl.tsl.bean.SysDataDict">
+        insert into sys_data_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="desp != null">
+                desp,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="fId != null">
+                f_id,
+            </if>
+            <if test="isDel != null">
+                is_del,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null">
+                #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="fId != null">
+                #{fId,jdbcType=CHAR},
+            </if>
+            <if test="isDel != null">
+                #{isDel,jdbcType=CHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=CHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=CHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cpl.tsl.bean.SysDataDict">
+        update sys_data_dict
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null">
+                desp = #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="fId != null">
+                f_id = #{fId,jdbcType=CHAR},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=CHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=CHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=CHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cpl.tsl.bean.SysDataDict">
+    update sys_data_dict
+    set code = #{code,jdbcType=VARCHAR},
+      desp = #{desp,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      f_id = #{fId,jdbcType=CHAR},
+      is_del = #{isDel,jdbcType=CHAR},
+      create_id = #{createId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=CHAR},
+      update_id = #{updateId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=CHAR},
+      version = #{version,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
