@@ -1,19 +1,26 @@
 package com.cpl.tsl.bean;
 
+import com.cpl.tsl.annotation.DataDict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+
 @ApiModel(value = "Employee", description = "Employee实体类")
 public class Employee implements Serializable {
+
     @ApiModelProperty(value = "id")
     private Integer id;
     @ApiModelProperty(value = "姓名")
     private String lastName;
+
+    @DataDict(type = "SEX")
     @ApiModelProperty(value = "性别")
     private Integer gender;
+
     @ApiModelProperty(value = "邮箱")
     private String email;
+
     @ApiModelProperty(value = "父级id")
     private Integer dId;
 

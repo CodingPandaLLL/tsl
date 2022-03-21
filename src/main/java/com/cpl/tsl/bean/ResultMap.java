@@ -1,10 +1,15 @@
 package com.cpl.tsl.bean;
 
-public class ResultMap {
+
+import org.apache.poi.ss.formula.functions.T;
+
+public class ResultMap<T> {
 
     String  message;
 
     String  status;
+
+    private T data;
 
     public String getMessage() {
         return message;
@@ -20,5 +25,13 @@ public class ResultMap {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

@@ -33,8 +33,8 @@ public class EmployeeController {
 
     //增加学生
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    @ApiOperation(value="增加学生",notes = "增加学生信息")
-    public ResultMap saveEmp(@RequestBody  @ApiParam(required = true, value = "学生对接")  EmployeeVo employeeVo) {
+    @ApiOperation(value = "增加学生", notes = "增加学生信息")
+    public ResultMap saveEmp(@RequestBody @ApiParam(required = true, value = "学生对接") EmployeeVo employeeVo) {
         ResultMap resultMap = new ResultMap();
         try {
             employeeService.saveEmp(employeeVo);
@@ -49,8 +49,8 @@ public class EmployeeController {
 
     //通过消息队列异步增加学生
     @RequestMapping(value = "/addRebbitMq", method = RequestMethod.POST)
-    @ApiOperation(value="通过消息队列异步增加学生",notes = "通过消息队列异步增加学生")
-    public ResultMap addRebbitMq(@RequestBody  @ApiParam(required = true, value = "学生对接")  EmployeeVo employeeVo) {
+    @ApiOperation(value = "通过消息队列异步增加学生", notes = "通过消息队列异步增加学生")
+    public ResultMap addRebbitMq(@RequestBody @ApiParam(required = true, value = "学生对接") EmployeeVo employeeVo) {
         ResultMap resultMap = new ResultMap();
         try {
             String messageId = String.valueOf(UUID.randomUUID());
@@ -73,8 +73,8 @@ public class EmployeeController {
 
     //删除学生
     @DeleteMapping("/{ids}")
-    @ApiOperation(value="删除学生",notes = "删除学生")
-    public ResultMap delEmp(@PathVariable("ids")  @ApiParam(required = true, value = "逗号分隔id字符串")  String ids) {
+    @ApiOperation(value = "删除学生", notes = "删除学生")
+    public ResultMap delEmp(@PathVariable("ids") @ApiParam(required = true, value = "逗号分隔id字符串") String ids) {
         ResultMap resultMap = new ResultMap();
         try {
             employeeService.delEmp(ids);
@@ -89,22 +89,26 @@ public class EmployeeController {
 
     //查询学生
     @GetMapping("/{id}")
-    @ApiOperation(value="查询学生",notes = "查询学生")
-    public Employee getEmp(@PathVariable("id")  @ApiParam(required = true, value = "id")  Integer id) throws IOException {
-        return employeeService.getEmpById(id);
+    @ApiOperation(value = "查询学生", notes = "查询学生")
+    public ResultMap getEmp(@PathVariable("id") @ApiParam(required = true, value = "id") Integer id) throws IOException {
+        ResultMap resultMap = new ResultMap();
+        resultMap.setData(employeeService.getEmpById(id));
+        resultMap.setStatus("200");
+        resultMap.setMessage("成功");
+        return resultMap;
     }
 
     //查询所有的学生
     @GetMapping("/getAll")
-    @ApiOperation(value="查询所有的学生",notes = "查询所有的学生")
+    @ApiOperation(value = "查询所有的学生", notes = "查询所有的学生")
     public List<Employee> getAllEmp() {
         return employeeService.getAllEmp();
     }
 
     //修改学生
     @PutMapping("/")
-    @ApiOperation(value="修改学生",notes = "修改学生")
-    public ResultMap updateEmp(@RequestBody  @ApiParam(required = true, value = "学生实体")  Employee employee) {
+    @ApiOperation(value = "修改学生", notes = "修改学生")
+    public ResultMap updateEmp(@RequestBody @ApiParam(required = true, value = "学生实体") Employee employee) {
         ResultMap resultMap = new ResultMap();
         try {
             employeeService.updateEmp(employee);
