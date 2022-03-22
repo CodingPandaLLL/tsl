@@ -88,6 +88,14 @@ public class DataDictionaryListener {
         return resultMap;
     }
 
+    /**
+     * method description
+     * @param dataDictSerializeFilter 序列化属性增强过滤器 
+     * @param result 增强对象
+     * @return com.alibaba.fastjson.JSONObject
+     * @author: lll
+     * @date: 2022年03月22日 19:03:21
+     */
     private JSONObject writeFieldToObject(DataDictSerializeFilter dataDictSerializeFilter, Object result) throws IllegalAccessException {
         String dataString = JSON.toJSONString(result, dataDictSerializeFilter);
         JSONObject resultJson = JSONObject.parseObject(dataString);
