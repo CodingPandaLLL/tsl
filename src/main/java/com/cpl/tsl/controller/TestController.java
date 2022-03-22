@@ -1,24 +1,23 @@
 package com.cpl.tsl.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.cpl.tsl.bean.Jgdwzc;
-import com.cpl.tsl.bean.Ml;
+import com.cpl.tsl.bean.Page;
+import com.cpl.tsl.bean.Person;
 import com.cpl.tsl.bean.ResultMap;
-import com.cpl.tsl.utils.JacksonUtil;
+import com.cpl.tsl.bean.Student;
 import com.cpl.tsl.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,9 +34,6 @@ public class TestController {
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
     @Resource
-    private RedisTemplate<String, String> template;
-
-    @Resource
     private RedisUtil redisUtil;
 
     @Value("${applicationName:tsl}")
@@ -51,30 +47,6 @@ public class TestController {
         resultMap.setStatus("200");
         resultMap.setMessage("保存成功");
         return resultMap;
-    }
-
-    //post测试
-    @RequestMapping(value = "/Catalog/CreateCataLog", method = RequestMethod.POST)
-    @ApiOperation(value = "测试请求CreateCataLog", notes = "测试请求CreateCataLog")
-    public ResultMap addRebbitMq(@RequestBody @ApiParam(required = true, value = "Ml") Ml jsonObject) {
-        ResultMap resultMap = new ResultMap();
-        resultMap.setStatus("200");
-        resultMap.setMessage("请求成功");
-        logger.info(JacksonUtil.toJsonString(jsonObject));
-        return resultMap;
-    }
-
-    //post测试
-    @RequestMapping(value = "/Supply/CreateOrg", method = RequestMethod.POST)
-    @ApiOperation(value = "测试请求CreateOrg", notes = "测试请求CreateOrg")
-    public JSONObject CreateOrg(@RequestBody @ApiParam(required = true, value = "Jgdwzc") Jgdwzc jsonObject) throws JSONException {
-        JSONObject jSONObject = new JSONObject();
-        JSONObject jSONObject1 = new JSONObject();
-        jSONObject.put("code", 1);
-        jSONObject1.put("share_org_id", "b22b8e60-4573-466b-ab7d-9c50d2fcb0ab");
-        jSONObject.put("data", jSONObject1);
-        jSONObject.put("messgae", "处理成功！");
-        return jSONObject;
     }
 
     /**
@@ -127,6 +99,94 @@ public class TestController {
         redisUtil.del(redisKey);
         logger.info("订单redisKey " + redisKey + " 已处理");
         return "处理完成";
+    }
+
+    @GetMapping("/getStudentOne")
+    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    public ResultMap getStudentOne() {
+        //封装参数
+        Student student = new Student();
+        Person person=new Person();
+        person.setId(1);
+        person.setName("zhangsao");
+        person.setIdCard("123456");
+        person.setHair("1");
+        student.setPerson(person);
+        student.setSchool("yangguang");
+        student.setGrade("2");
+        student.setClasses("2");
+        student.setStudentNo("654321");
+        student.setScore("100");
+
+
+        ResultMap resultMap = new ResultMap();
+        resultMap.setStatus("200");
+        resultMap.setMessage("保存成功");
+        resultMap.setData(student);
+        return resultMap;
+    }
+
+    @GetMapping("/getStudentList")
+    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    public ResultMap getStudentList() {
+        List<Student> studentList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            //封装参数
+            Student student = new Student();
+            Person person=new Person();
+            person.setId(1);
+            person.setName("zhangsao");
+            person.setIdCard("123456");
+            person.setHair("1");
+            student.setPerson(person);
+            student.setSchool("yangguang");
+            student.setGrade("2");
+            student.setClasses("2");
+            student.setStudentNo("654321");
+            student.setScore("100");
+            studentList.add(student);
+        }
+
+        ResultMap resultMap = new ResultMap();
+        resultMap.setStatus("200");
+        resultMap.setMessage("保存成功");
+        resultMap.setData(studentList);
+        return resultMap;
+    }
+
+    @GetMapping("/getStudentPage")
+    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    public ResultMap getStudentPage() {
+
+        Page<Student> studentPage = new Page<Student>();
+        List<Student> studentList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            //封装参数
+            Student student = new Student();
+            Person person=new Person();
+            person.setId(1);
+            person.setName("zhangsao");
+            person.setIdCard("123456");
+            person.setHair("1");
+            student.setPerson(person);
+            student.setSchool("yangguang");
+            student.setGrade("2");
+            student.setClasses("2");
+            student.setStudentNo("65432ying1");
+            student.setScore("100");
+            studentList.add(student);
+        }
+        studentPage.setCurrentPage(1);
+        studentPage.setPageSize(1);
+        studentPage.setRows(studentList);
+        studentPage.setTotalCount(1);
+        studentPage.setTotalPage(1);
+
+        ResultMap resultMap = new ResultMap();
+        resultMap.setStatus("200");
+        resultMap.setMessage("保存成功");
+        resultMap.setData(studentPage);
+        return resultMap;
     }
 
 

@@ -1,8 +1,6 @@
 package com.cpl.tsl.bean;
 
 
-import org.apache.poi.ss.formula.functions.T;
-
 public class ResultMap<T> {
 
     String  message;

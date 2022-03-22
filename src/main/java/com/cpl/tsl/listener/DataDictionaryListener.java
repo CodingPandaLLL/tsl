@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 属性增强拦截器
@@ -34,6 +36,9 @@ public class DataDictionaryListener {
 
     //拦截解析结果类
     private String resultMapName = "com.cpl.tsl.bean.ResultMap";
+
+    //表示这个包下面的类才有效
+    private static final String NEED_SCAN_PACKAGE = "com.cpl.tsl.bean";
 
     /**
      * 在请求之中拦截获取拦截
@@ -65,12 +70,54 @@ public class DataDictionaryListener {
             if (DATA.equals(field.getName()) && field.get(result) != null) {
                 logger.info(field.get(result).getClass().getName());
                 DataDictSerializeFilter dataDictSerializeFilter = new DataDictSerializeFilter();
-                String jsonString = JSON.toJSONString(field.get(result), dataDictSerializeFilter);
-                JSONObject resultJson = JSONObject.parseObject(jsonString);
-                resultMap.setData(resultJson);
+                // list，特殊处理一下
+                if (field.get(result) instanceof List) {
+                    List list = (List) field.get(result);
+                    List resultList = new ArrayList();
+                    for (Object o : list) {
+                        JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, o);
+                        resultList.add(resultJson);
+                    }
+                    resultMap.setData(resultList);
+                } else {
+                    JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, field.get(result));
+                    resultMap.setData(resultJson);
+                }
             }
         }
         return resultMap;
+    }
+
+    private JSONObject writeFieldToObject(DataDictSerializeFilter dataDictSerializeFilter, Object result) throws IllegalAccessException {
+        String dataString = JSON.toJSONString(result, dataDictSerializeFilter);
+        JSONObject resultJson = JSONObject.parseObject(dataString);
+
+        Field[] fields = result.getClass().getDeclaredFields();
+        for (int i = 0; i < fields.length; i++) {
+            //field Name
+            String fieldName = fields[i].getName();
+            String packageName = fields[i].getClass().getPackage().getName();
+            //include other bean
+            if (packageName.startsWith(NEED_SCAN_PACKAGE)) {
+                String sonJsonString = JSON.toJSONString(fields[i].get(result), dataDictSerializeFilter);
+                JSONObject sonResultJson = JSONObject.parseObject(sonJsonString);
+                resultJson.put(fieldName, sonResultJson);
+            }
+            //include list
+            fields[i].setAccessible(true);
+            if (fields[i].get(result) instanceof List) {
+                List list = (List) fields[i].get(result);
+                List resultList = new ArrayList();
+                for (Object o : list) {
+                    String sonListJsonString = JSON.toJSONString(o, dataDictSerializeFilter);
+                    JSONObject sonListResultJson = JSONObject.parseObject(sonListJsonString);
+                    resultList.add(sonListResultJson);
+                }
+                resultJson.put(fieldName, resultList);
+            }
+        }
+
+        return resultJson;
     }
 
 }
