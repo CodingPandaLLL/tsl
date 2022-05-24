@@ -58,32 +58,36 @@ public class DataDictionaryListener {
         }
         // 实例化
         ResultMap resultMap = new ResultMap();
-        Field[] fieldInfo = methodReturnType.getDeclaredFields();
-        for (Field field : fieldInfo) {
-            field.setAccessible(true);
-            if (MESSAGE.equals(field.getName()) && field.get(result) != null) {
-                resultMap.setMessage(field.get(result).toString());
-            }
-            if (STATUS.equals(field.getName()) && field.get(result) != null) {
-                resultMap.setStatus(field.get(result).toString());
-            }
-            if (DATA.equals(field.getName()) && field.get(result) != null) {
-                logger.info(field.get(result).getClass().getName());
-                DataDictSerializeFilter dataDictSerializeFilter = new DataDictSerializeFilter();
-                // list，特殊处理一下
-                if (field.get(result) instanceof List) {
-                    List list = (List) field.get(result);
-                    List resultList = new ArrayList();
-                    for (Object o : list) {
-                        JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, o);
-                        resultList.add(resultJson);
+        try {
+            Field[] fieldInfo = methodReturnType.getDeclaredFields();
+            for (Field field : fieldInfo) {
+                field.setAccessible(true);
+                if (MESSAGE.equals(field.getName()) && field.get(result) != null) {
+                    resultMap.setMessage(field.get(result).toString());
+                }
+                if (STATUS.equals(field.getName()) && field.get(result) != null) {
+                    resultMap.setStatus(field.get(result).toString());
+                }
+                if (DATA.equals(field.getName()) && field.get(result) != null) {
+                    logger.info(field.get(result).getClass().getName());
+                    DataDictSerializeFilter dataDictSerializeFilter = new DataDictSerializeFilter();
+                    // list，特殊处理一下
+                    if (field.get(result) instanceof List) {
+                        List list = (List) field.get(result);
+                        List resultList = new ArrayList();
+                        for (Object o : list) {
+                            JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, o);
+                            resultList.add(resultJson);
+                        }
+                        resultMap.setData(resultList);
+                    } else {
+                        JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, field.get(result));
+                        resultMap.setData(resultJson);
                     }
-                    resultMap.setData(resultList);
-                } else {
-                    JSONObject resultJson = writeFieldToObject(dataDictSerializeFilter, field.get(result));
-                    resultMap.setData(resultJson);
                 }
             }
+        }catch (Exception exception){
+            return result;
         }
         return resultMap;
     }

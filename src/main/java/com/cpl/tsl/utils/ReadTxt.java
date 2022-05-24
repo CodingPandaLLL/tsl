@@ -1,4 +1,4 @@
-package com.cpl.tsl.demo;
+package com.cpl.tsl.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,11 +6,12 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 /**
- * @author 码农小江
- * H20121012.java
- * 2012-10-12下午11:40:21
+ * 读取文件
+ *
+ * @author: lll
+ * @date: 2022年05月24日 17:05:58
  */
-public class Demo {
+public class ReadTxt {
     /**
      * 功能：Java读取txt文件的内容
      * 步骤：1：先获得文件句柄
