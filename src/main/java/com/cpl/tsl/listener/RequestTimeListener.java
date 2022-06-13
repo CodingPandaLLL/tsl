@@ -26,10 +26,10 @@ import java.util.concurrent.*;
 public class RequestTimeListener {
 
     //拦截解析结果类
-    private String resultMapName = "com.cpl.tsl.bean.ResultMap";
+    private final String resultMapName = "com.cpl.tsl.bean.ResultMap";
 
     //超时时间15秒
-    private Integer outTime = 15;
+    private final Integer outTime = 15;
 
     //应用层不限制超时时间的URL集合
     @Value(value = "${noRequestTimeLimitUrl:null}")
