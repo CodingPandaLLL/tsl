@@ -1,13 +1,11 @@
 package com.cpl.tsl.bean;
 
-import com.cpl.tsl.annotation.DataDict;
 
 public class Person {
 
     private int id;
     private String name;
     private String idCard;
-    @DataDict(type = "SEX")
     private String hair;
 
 

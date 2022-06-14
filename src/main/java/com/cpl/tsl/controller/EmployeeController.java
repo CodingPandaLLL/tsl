@@ -37,7 +37,6 @@ public class EmployeeController {
     public ResultMap saveEmp(@RequestBody @ApiParam(required = true, value = "学生对接") EmployeeVo employeeVo) {
         ResultMap resultMap = new ResultMap();
         try {
-            employeeService.saveEmp(employeeVo);
             resultMap.setStatus("200");
             resultMap.setMessage("保存成功");
         } catch (Exception e) {
@@ -77,7 +76,6 @@ public class EmployeeController {
     public ResultMap delEmp(@PathVariable("ids") @ApiParam(required = true, value = "逗号分隔id字符串") String ids) {
         ResultMap resultMap = new ResultMap();
         try {
-            employeeService.delEmp(ids);
             resultMap.setStatus("200");
             resultMap.setMessage("删除成功");
         } catch (Exception e) {
@@ -92,7 +90,6 @@ public class EmployeeController {
     @ApiOperation(value = "查询学生", notes = "查询学生")
     public ResultMap getEmp(@PathVariable("id") @ApiParam(required = true, value = "id") Integer id) throws IOException {
         ResultMap resultMap = new ResultMap();
-        resultMap.setData(employeeService.getEmpById(id));
         resultMap.setStatus("200");
         resultMap.setMessage("成功");
         return resultMap;
@@ -102,7 +99,7 @@ public class EmployeeController {
     @GetMapping("/getAll")
     @ApiOperation(value = "查询所有的学生", notes = "查询所有的学生")
     public List<Employee> getAllEmp() {
-        return employeeService.getAllEmp();
+        return null;
     }
 
     //修改学生
@@ -111,7 +108,6 @@ public class EmployeeController {
     public ResultMap updateEmp(@RequestBody @ApiParam(required = true, value = "学生实体") Employee employee) {
         ResultMap resultMap = new ResultMap();
         try {
-            employeeService.updateEmp(employee);
             resultMap.setStatus("200");
             resultMap.setMessage("保存成功");
         } catch (Exception e) {

@@ -4,64 +4,11 @@ server:
   port: 8181
 #  context-path: /tsl
 spring:
-#  resources:
-#    static-locations: classpath:html/
-  #配置rabbitMq 服务器
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-    listener:
-      simple:
-        auto-startup: false
+  #  resources:
+  #    static-locations: classpath:html/
   aop:
     auto: true
     proxy-target-class: true
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 1
-    jedis:
-      pool:
-        max-idle: 8
-        min-idle: 1
-        max-active: 8
-        max-wait: -1
-  datasource:
-#   数据源基本配置
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/tsl?serverTimezone=UTC
-    type: com.alibaba.druid.pool.DruidDataSource
-#   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-#   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-mybatis:
-  # 指定全局配置文件位置
-  config-location: classpath:mybatis-config.xml
-  # 指定sql映射文件位置
-  mapper-locations: classpath:dao/*.xml
-
-#    schema:
-#      - classpath:sql/department.sql
-#      - classpath:sql/employee.sql
-
 #设置日志级别打印出sql
 logging:
   level:

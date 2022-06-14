@@ -1,6 +1,5 @@
 package com.cpl.tsl.bean;
 
-import com.cpl.tsl.annotation.DataDict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,7 +13,6 @@ public class Employee implements Serializable {
     @ApiModelProperty(value = "姓名")
     private String lastName;
 
-    @DataDict(type = "SEX")
     @ApiModelProperty(value = "性别")
     private Integer gender;
 

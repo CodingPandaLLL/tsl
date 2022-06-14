@@ -1,10 +1,6 @@
 package com.cpl.tsl.listener;
 
 import com.cpl.tsl.utils.JacksonUtil;
-import org.apache.ibatis.javassist.*;
-import org.apache.ibatis.javassist.bytecode.CodeAttribute;
-import org.apache.ibatis.javassist.bytecode.LocalVariableAttribute;
-import org.apache.ibatis.javassist.bytecode.MethodInfo;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -78,7 +74,7 @@ public class RequestLog {
         // 获取输入参数
         Object[] args = pjp.getArgs();
         //获取参数名称和值
-         inputParamMap = getFieldsName(this.getClass(), clazzName, methodName, args);
+         inputParamMap = null;
         // 获取请求地址
         requestPath = request.getRequestURI();
         //请求Ip地址
@@ -141,28 +137,5 @@ public class RequestLog {
         return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
     }
 
-    /**
-    * 获取参数名称和参数值
-    * @author lll
-    * @date 2021/4/4 21:45 
-    */
-    private Map getFieldsName(Class cls, String clazzName, String methodName, Object[] args) throws NotFoundException {
-        Map map = new HashMap();
-        ClassPool pool = ClassPool.getDefault();
-        ClassClassPath classPath = new ClassClassPath(cls);
-        pool.insertClassPath(classPath);
-        CtClass cc = pool.get(clazzName);
-        CtMethod cm = cc.getDeclaredMethod(methodName);
-        MethodInfo methodInfo = cm.getMethodInfo();
-        CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
-        LocalVariableAttribute attr = (LocalVariableAttribute) codeAttribute.getAttribute(LocalVariableAttribute.tag);
-        if (attr == null) {
-        }
-        int pos = Modifier.isStatic(cm.getModifiers()) ? 0 : 1;
-        for (int i = 0; i < cm.getParameterTypes().length; i++) {
-            map.put(attr.variableName(i + pos), args[i]);//paramNames即参数名
-        }
-        return map;
-    }
 
 }

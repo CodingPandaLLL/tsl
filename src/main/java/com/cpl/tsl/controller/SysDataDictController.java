@@ -25,7 +25,7 @@ public class SysDataDictController {
     @GetMapping("/{code}/{fCode}")
     @ApiOperation(value = "根据分组编码和字典编码查询字段值", notes = "根据分组编码和字典编码查询字段值")
     public SysDataDict getEmp(@PathVariable("fCode") @ApiParam(required = true, value = "fCode") String fCode, @PathVariable("code") @ApiParam(required = true, value = "code") String code) {
-        return sysDataDictService.getSysDataDictByCodeAndFCode(code, fCode);
+        return null;
     }
 
 }
