@@ -14,6 +14,7 @@ tsl是基于springboot框架的一个基础框架。数据库端用到mysql，�
 ### 代码结构
 ``` lua
 tsl
+├── annotation -- 自定义注解
 ├── bean -- 实体类包
 ├── config -- 系统配置类
 ├── controller -- 视图层类包
@@ -46,6 +47,20 @@ tsl
 - 配置静态页面访问，添加默认首页
 - 修改spring boot和一些第三方的依赖省级
 - 添加写入文件工具类
+- ### V1.0.5
+- 更新首页文件处理
+- 接入swagger自动化文档
+- 更新spring boot版本和其他第三方版本
+- 添加一些工具方法
+- ### V1.0.6
+- 添加数据字典功能
+- 实现数据字典字段对应自定义属性增强
+- 添加文件读取工具类
+- 完善返回类ResultMap接口和方法
+- 添加自定义接口超时自动熔断功能
+- 完善启动服务不检查redis连接
+- 升级fastjson版本，解决漏洞
+- 升级原始swagger原始UI为Swagger-Bootstrap-UI
 
 ## 接口使用说明
-swagger调用：http://127.0.0.1:8181/swagger-ui/index.html
+swagger调用：http://127.0.0.1:8181/doc.html
