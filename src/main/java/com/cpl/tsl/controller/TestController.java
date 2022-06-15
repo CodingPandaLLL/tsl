@@ -102,7 +102,7 @@ public class TestController {
     }
 
     @GetMapping("/getStudentOne")
-    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    @ApiOperation(value = "getStudentOne", notes = "getStudentOne")
     public ResultMap getStudentOne() {
         //封装参数
         Student student = new Student();
@@ -127,7 +127,7 @@ public class TestController {
     }
 
     @GetMapping("/getStudentList")
-    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    @ApiOperation(value = "getStudentList", notes = "getStudentList")
     public ResultMap getStudentList() {
         List<Student> studentList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -155,7 +155,7 @@ public class TestController {
     }
 
     @GetMapping("/getStudentPage")
-    @ApiOperation(value = "测试redis移除参数", notes = "测试redis移除参数")
+    @ApiOperation(value = "getStudentPage", notes = "getStudentPage")
     public ResultMap getStudentPage() {
 
         Page<Student> studentPage = new Page<Student>();
