@@ -44,6 +44,17 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.5.1</version>
 		</dependency>
+		<!-- mybatis-plus 逆向工程所需依赖 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-generator</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.31</version>
+		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
