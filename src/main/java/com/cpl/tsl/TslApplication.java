@@ -1,5 +1,6 @@
 package com.cpl.tsl;
 
+import com.cpl.tsl.listener.KafkaDirectReceiver;
 import com.cpl.tsl.listener.RedisTaskListener;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

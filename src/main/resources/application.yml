@@ -83,3 +83,5 @@ logging:
       cpl:
         tsl: debug
 swagger: true
+# 卡夫卡控制开关(1开0关)
+kafkaStartOrNot: 1

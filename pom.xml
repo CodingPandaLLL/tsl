@@ -184,6 +184,11 @@
 			<artifactId>spring-kafka</artifactId>
 			<version>2.3.14.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>com.alibaba.otter</groupId>
+			<artifactId>canal.client</artifactId>
+			<version>1.0.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
