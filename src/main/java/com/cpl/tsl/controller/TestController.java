@@ -1,10 +1,9 @@
 package com.cpl.tsl.controller;
 
 
-import com.cpl.tsl.bean.Page;
-import com.cpl.tsl.bean.Person;
+import com.alibaba.fastjson.JSON;
+import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.ResultMap;
-import com.cpl.tsl.bean.Student;
 import com.cpl.tsl.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,12 +11,11 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,6 +36,9 @@ public class TestController {
 
     @Value("${applicationName:tsl}")
     private String applicationName;
+
+    @Resource
+    private KafkaTemplate kafkaTemplate;
 
 
     //get测试
@@ -101,91 +102,25 @@ public class TestController {
         return "处理完成";
     }
 
-    @GetMapping("/getStudentOne")
-    @ApiOperation(value = "getStudentOne", notes = "getStudentOne")
-    public ResultMap getStudentOne() {
-        //封装参数
-        Student student = new Student();
-        Person person=new Person();
-        person.setId(1);
-        person.setName("zhangsao");
-        person.setIdCard("123456");
-        person.setHair("1");
-        student.setPerson(person);
-        student.setSchool("yangguang");
-        student.setGrade("2");
-        student.setClasses("2");
-        student.setStudentNo("654321");
-        student.setScore("100");
-
-
+    @RequestMapping(value = "/sendKafkaMessage", method = RequestMethod.POST)
+    @ApiOperation(value = "kafka发送消息", notes = "kafka发送消息")
+    public ResultMap sendKafkaMessage() {
         ResultMap resultMap = new ResultMap();
-        resultMap.setStatus("200");
-        resultMap.setMessage("保存成功");
-        resultMap.setData(student);
-        return resultMap;
-    }
-
-    @GetMapping("/getStudentList")
-    @ApiOperation(value = "getStudentList", notes = "getStudentList")
-    public ResultMap getStudentList() {
-        List<Student> studentList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            //封装参数
-            Student student = new Student();
-            Person person=new Person();
-            person.setId(1);
-            person.setName("zhangsao");
-            person.setIdCard("123456");
-            person.setHair("1");
-            student.setPerson(person);
-            student.setSchool("yangguang");
-            student.setGrade("2");
-            student.setClasses("2");
-            student.setStudentNo("654321");
-            student.setScore("100");
-            studentList.add(student);
+        try {
+            Employee employee = new Employee();
+            employee.setdId(1);
+            employee.setEmail("2121");
+            employee.setLastName("jsdkjdsjk");
+            kafkaTemplate.send("user-log", JSON.toJSONString(employee));
+            resultMap.setStatus("200");
+            resultMap.setMessage("保存成功");
+        } catch (Exception exception) {
+            logger.info(exception.getMessage());
+            resultMap.setStatus("200");
+            resultMap.setMessage("保存成功");
         }
 
-        ResultMap resultMap = new ResultMap();
-        resultMap.setStatus("200");
-        resultMap.setMessage("保存成功");
-        resultMap.setData(studentList);
-        return resultMap;
-    }
 
-    @GetMapping("/getStudentPage")
-    @ApiOperation(value = "getStudentPage", notes = "getStudentPage")
-    public ResultMap getStudentPage() {
-
-        Page<Student> studentPage = new Page<Student>();
-        List<Student> studentList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            //封装参数
-            Student student = new Student();
-            Person person=new Person();
-            person.setId(1);
-            person.setName("zhangsao");
-            person.setIdCard("123456");
-            person.setHair("1");
-            student.setPerson(person);
-            student.setSchool("yangguang");
-            student.setGrade("2");
-            student.setClasses("2");
-            student.setStudentNo("65432ying1");
-            student.setScore("100");
-            studentList.add(student);
-        }
-        studentPage.setCurrentPage(1);
-        studentPage.setPageSize(1);
-        studentPage.setRows(studentList);
-        studentPage.setTotalCount(1);
-        studentPage.setTotalPage(1);
-
-        ResultMap resultMap = new ResultMap();
-        resultMap.setStatus("200");
-        resultMap.setMessage("保存成功");
-        resultMap.setData(studentPage);
         return resultMap;
     }
 
