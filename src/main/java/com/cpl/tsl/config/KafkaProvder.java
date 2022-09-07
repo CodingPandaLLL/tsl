@@ -8,7 +8,6 @@ import com.alibaba.otter.canal.protocol.Message;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
@@ -20,7 +19,7 @@ import java.util.List;
  * @author: lll
  * @date: 2022年06月30日 19:06:17
  */
-@Component
+//@Component
 public class KafkaProvder implements ApplicationRunner {
 
     @Resource
