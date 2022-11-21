@@ -189,6 +189,10 @@
 			<artifactId>canal.client</artifactId>
 			<version>1.0.12</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
