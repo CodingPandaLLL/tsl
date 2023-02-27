@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date: 2022年03月07日 11:03:48
  */
 @MapperScan(value = "com.cpl.tsl.dao")
-@ComponentScan(basePackages = {"com.cpl.tsl"}, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {KafkaProvder.class,RedisTaskListener.class}))
+@ComponentScan(basePackages = {"com.cpl.tsl"}, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {KafkaDirectReceiver.class, KafkaProvder.class, RedisTaskListener.class}))
 @SpringBootApplication
 @EnableTransactionManagement
 public class TslApplication {
