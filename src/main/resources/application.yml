@@ -1,87 +1,37 @@
-# 服务名称
-applicationName: tsl
+mybatis:
+  mapper-locations: classpath:dao/*.xml
+  type-aliases-package: com.cpl.tsl.bean
 server:
   port: 8181
-#  context-path: /tsl
 spring:
-#  resources:
-#    static-locations: classpath:html/
-  #配置rabbitMq 服务器
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-    listener:
-      simple:
-        auto-startup: false
-  aop:
-    auto: true
-    proxy-target-class: true
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 1
-    jedis:
-      pool:
-        max-idle: 8
-        min-idle: 1
-        max-active: 8
-        max-wait: -1
-  datasource:
-#   数据源基本配置
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/tsl?serverTimezone=UTC
-    type: com.alibaba.druid.pool.DruidDataSource
-#   数据源其他配置
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-#   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      retries: ''
-      batch-size: 16384
-      buffer-memory: 33554432
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      group-id: user-log-group
-      auto-offset-reset: earliest
-      enable-auto-commit: true
-      auto-commit-interval: 100
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-mybatis-plus:
-  # 指定全局配置文件位置
-  config-location: classpath:mybatis-config.xml
-  # 指定sql映射文件位置
-  mapper-locations: classpath:dao/*.xml
-
-#    schema:
-#      - classpath:sql/department.sql
-#      - classpath:sql/employee.sql
-
-#设置日志级别打印出sql
-logging:
-  level:
-    com:
-      cpl:
-        tsl: debug
-swagger: true
-# 卡夫卡控制开关(1开0关)
-kafkaStartOrNot: 1
+  main:
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    datasource:
+      ds1:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        maxPoolSize: 100
+        minPoolSize: 5
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://127.0.0.1:3306/tsl?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        username: root
+      ds2:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        maxPoolSize: 100
+        minPoolSize: 5
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://127.0.0.1:3306/tsl_read?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        username: root
+      names: ds1,ds2
+    masterslave:
+      load-balance-algorithm-type: round_robin
+      master-data-source-name: ds1
+      name: ms
+      slave-data-source-names: ds2
+    props:
+      sql:
+        show: true
+    sharding:
+      default-data-source-name: ds1
