@@ -8,8 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 
 //添加SpringRuner启动时会启动application，可以注入服务
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = TslApplication.class)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = TslApplication.class)
 public class TslTest {
 
     @Resource

@@ -1,4 +1,4 @@
-package com.cpl.tsl.bean;
+package com.cpl.tsl.bean.base;
 
 import java.util.List;
 

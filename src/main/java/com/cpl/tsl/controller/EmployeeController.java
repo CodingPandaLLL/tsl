@@ -3,7 +3,7 @@ package com.cpl.tsl.controller;
 
 import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.EmployeeVo;
-import com.cpl.tsl.bean.ResultMap;
+import com.cpl.tsl.bean.base.ResultMap;
 import com.cpl.tsl.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

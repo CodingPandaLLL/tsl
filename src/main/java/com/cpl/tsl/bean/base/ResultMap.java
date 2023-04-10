@@ -1,4 +1,4 @@
-package com.cpl.tsl.bean;
+package com.cpl.tsl.bean.base;
 
 
 import com.cpl.tsl.enums.HttpCodeEnum;

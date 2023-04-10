@@ -3,7 +3,7 @@ package com.cpl.tsl.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cpl.tsl.bean.Employee;
-import com.cpl.tsl.bean.ResultMap;
+import com.cpl.tsl.bean.base.ResultMap;
 import com.cpl.tsl.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

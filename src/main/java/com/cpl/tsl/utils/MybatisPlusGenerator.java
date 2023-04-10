@@ -22,14 +22,14 @@ public class MybatisPlusGenerator {
 
     // 数据库连接配置
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/tsl?&serverTimezone=UTC";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/information_schema?&serverTimezone=UTC";
     private static final String JDBC_USER_NAME = "root";
     private static final String JDBC_PASSOWRD = "123456";
     // 包名和模块名
     private static final String PACKAGE_NAME = "com.cpl";
     private static final String MODULE_NAME = "tsl";
     // 表名，多个表使用英文逗号分割
-    private static final String TBL_NAMES = "ss_mlxx";
+    private static final String TBL_NAMES = "TABLES";
     // 表名的前缀，从表生成代码时会去掉前缀
     private static final String TABLE_PREFIX = "ss_";
 

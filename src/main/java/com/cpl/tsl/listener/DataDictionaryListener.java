@@ -2,7 +2,7 @@ package com.cpl.tsl.listener;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cpl.tsl.bean.ResultMap;
+import com.cpl.tsl.bean.base.ResultMap;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -35,7 +35,7 @@ public class DataDictionaryListener {
     private String DATA = "data";
 
     //拦截解析结果类
-    private String resultMapName = "com.cpl.tsl.bean.ResultMap";
+    private String resultMapName = "com.cpl.tsl.bean.base.ResultMap";
 
     //表示这个包下面的类才有效
     private static final String NEED_SCAN_PACKAGE = "com.cpl.tsl.bean";

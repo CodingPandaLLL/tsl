@@ -1,6 +1,6 @@
 package com.cpl.tsl.listener;
 
-import com.cpl.tsl.bean.ResultMap;
+import com.cpl.tsl.bean.base.ResultMap;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -26,7 +26,7 @@ import java.util.concurrent.*;
 public class RequestTimeListener {
 
     //拦截解析结果类
-    private final String resultMapName = "com.cpl.tsl.bean.ResultMap";
+    private final String resultMapName = "com.cpl.tsl.bean.base.ResultMap";
 
     //超时时间15秒
     private final Integer outTime = 15;

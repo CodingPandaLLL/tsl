@@ -2,24 +2,19 @@ package com.cpl.tsl.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.cpl.tsl.bean.Page;
+import com.cpl.tsl.bean.base.Page;
 import com.cpl.tsl.bean.Person;
-import com.cpl.tsl.bean.ResultMap;
+import com.cpl.tsl.bean.base.ResultMap;
 import com.cpl.tsl.bean.Student;
-import com.cpl.tsl.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * demo类
