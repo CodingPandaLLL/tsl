@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cpl.tsl.dao.LogDao">
+    <insert id="createTable" parameterType="String">
+        CREATE TABLE ${tableName}
+        (
+            `id`          varchar(255) NOT NULL COMMENT '主键',
+            `action`      varchar(255) DEFAULT NULL COMMENT '行为描述',
+            `create_time` varchar(32)  DEFAULT NULL COMMENT '创建时间',
+            `creator`     varchar(255) DEFAULT NULL COMMENT '创建者',
+            `creator_id`  varchar(32)  DEFAULT NULL COMMENT '创建者id',
+            `module`      varchar(255) DEFAULT NULL COMMENT '模块',
+            `flag`        varchar(1)   DEFAULT NULL COMMENT '标识',
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    </insert>
+
+    <insert id="saveLog">
+        INSERT INTO ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="log.id != null">id,</if>
+            <if test="log.action != null">action,</if>
+            <if test="log.createTime != null">create_time,</if>
+            <if test="log.creator != null">creator,</if>
+            <if test="log.creatorId != null">creator_id,</if>
+            <if test="log.module != null">module,</if>
+            <if test="log.flag != null">flag</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="log.id != null">#{log.id},</if>
+            <if test="log.action != null">#{log.action},</if>
+            <if test="log.createTime != null">#{log.createTime},</if>
+            <if test="log.creator != null">#{log.creator},</if>
+            <if test="log.creatorId != null">#{log.creatorId},</if>
+            <if test="log.module != null">#{log.module},</if>
+            <if test="log.flag != null">#{log.flag},</if>
+        </trim>
+    </insert>
+
+    <select id="queryTableByName" parameterType="String" resultType="Integer">
+        select count(*)
+        from information_schema.TABLES
+        where table_name = #{tableName}
+    </select>
+
+    <delete id="deleteByIdAndTableName">
+        delete
+        from `${tableName}`
+        where id = #{id};
+    </delete>
+
+    <select id="queryByIdAndTableName" resultType="com.cpl.tsl.bean.Log">
+        select *
+        from `${tableName}`
+        where id = #{id};
+    </select>
+    <select id="getAllLogTable" resultType="com.cpl.tsl.bean.Tables">
+        select *
+        from information_schema.TABLES
+        where table_name LIKE "log%"
+    </select>
+    <select id="getPage" resultType="com.cpl.tsl.bean.Log">
+        select T.* from (
+        <foreach collection="logList" item="item" separator=" UNION ALL">
+             SELECT * FROM ${item.tableName}
+        </foreach>
+        ) T limit #{page},#{pageSize}
+    </select>
+    <select id="getLogCount" resultType="java.lang.Integer">
+        select count(*) from (
+        <foreach collection="logList" item="item" separator=" UNION ALL">
+            SELECT * FROM `${item.tableName}`
+        </foreach>
+        ) T
+    </select>
+</mapper>
