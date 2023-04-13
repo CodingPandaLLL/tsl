@@ -6,7 +6,6 @@ import com.cpl.tsl.bean.Page;
 import com.cpl.tsl.bean.Person;
 import com.cpl.tsl.bean.ResultMap;
 import com.cpl.tsl.bean.Student;
-import com.cpl.tsl.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

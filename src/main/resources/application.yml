@@ -9,6 +9,9 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 #设置日志级别打印出sql
 logging:
   level:
