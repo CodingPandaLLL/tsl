@@ -4,8 +4,8 @@ server:
   port: 8181
 #  context-path: /tsl
 spring:
-#  resources:
-#    static-locations: classpath:html/
+  #  resources:
+  #    static-locations: classpath:html/
   #配置rabbitMq 服务器
   rabbitmq:
     host: 127.0.0.1
@@ -29,13 +29,13 @@ spring:
         max-active: 8
         max-wait: -1
   datasource:
-#   数据源基本配置
+    #   数据源基本配置
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/tsl?serverTimezone=UTC
+    url: jdbc:mysql://localhost:8066/TSL?serverTimezone=UTC&useSSL=false&useUnicode=true
     type: com.alibaba.druid.pool.DruidDataSource
-#   数据源其他配置
+    #   数据源其他配置
     initialSize: 5
     minIdle: 5
     maxActive: 20
@@ -47,7 +47,7 @@ spring:
     testOnBorrow: false
     testOnReturn: false
     poolPreparedStatements: true
-#   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
     filters: stat,wall
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
@@ -85,3 +85,4 @@ logging:
 swagger: true
 # 卡夫卡控制开关(1开0关)
 kafkaStartOrNot: 1
+
