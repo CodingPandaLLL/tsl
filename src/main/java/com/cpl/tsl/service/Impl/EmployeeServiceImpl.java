@@ -2,6 +2,7 @@ package com.cpl.tsl.service.Impl;
 
 import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.EmployeeVo;
+import com.cpl.tsl.bean.Poetry;
 import com.cpl.tsl.dao.EmployeeDao;
 import com.cpl.tsl.service.EmployeeService;
 import com.cpl.tsl.utils.JacksonUtil;
@@ -76,5 +77,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void updateEmp(Employee employee) {
         employeeDao.updateEmp(employee);
+    }
+
+    @Override
+    public void savePoetry(Poetry poetry) {
+        Poetry poetry1=employeeDao.getPoetryByCategory(poetry.getContent());
+        if(poetry1==null){
+            employeeDao.savePoetry(poetry);
+        }
     }
 }

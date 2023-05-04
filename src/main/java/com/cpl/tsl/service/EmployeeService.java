@@ -2,6 +2,7 @@ package com.cpl.tsl.service;
 
 import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.EmployeeVo;
+import com.cpl.tsl.bean.Poetry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,4 +21,6 @@ public interface EmployeeService {
     void delEmp(String ids);
 
     void updateEmp(Employee employee);
+
+    void savePoetry(Poetry poetry);
 }

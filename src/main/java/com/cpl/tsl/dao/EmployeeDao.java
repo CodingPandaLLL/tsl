@@ -2,6 +2,7 @@ package com.cpl.tsl.dao;
 
 import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.EmployeeVo;
+import com.cpl.tsl.bean.Poetry;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,8 @@ public interface EmployeeDao {
     void delEmp(long id);
 
     void updateEmp(Employee employee);
+
+    Poetry getPoetryByCategory(@Param("content")String content);
+
+    void savePoetry(@Param("poetry")Poetry poetry);
 }

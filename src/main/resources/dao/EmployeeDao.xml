@@ -6,28 +6,42 @@
     <!--<cache type="com.cpl.tsl.utils.RedisCache" />-->
 
     <select id="getEmpById" resultType="com.cpl.tsl.bean.Employee">
-        SELECT * FROM employee WHERE id=#{id}
+        SELECT *
+        FROM employee
+        WHERE id = #{id}
     </select>
 
     <select id="getAllEmp" resultType="com.cpl.tsl.bean.Employee">
-        SELECT * FROM employee
+        SELECT *
+        FROM employee
+    </select>
+    <select id="getPoetryByCategory" resultType="com.cpl.tsl.bean.Poetry">
+        SELECT *
+        FROM poetry
+        where content = #{content}
     </select>
 
     <insert id="saveEmp">
-        INSERT INTO employee(lastName,email,gender,d_id) VALUES (#{lastName},#{email},#{gender},#{dId})
+        INSERT INTO employee(lastName, email, gender, d_id)
+        VALUES (#{lastName}, #{email}, #{gender}, #{dId})
     </insert>
 
     <insert id="saveEmpLst" useGeneratedKeys="true" parameterType="java.util.List">
         INSERT INTO employee(lastName,email,gender,d_id)
         values
-            <foreach collection="empLst" item="item" index="index" separator=",">
+        <foreach collection="empLst" item="item" index="index" separator=",">
             (#{item.lastName},#{item.email},#{item.gender},#{item.dId})
         </foreach>
     </insert>
-    
+    <insert id="savePoetry"  parameterType="com.cpl.tsl.bean.Poetry">
+        INSERT INTO poetry(content, origin, author, category, create_time)
+        VALUES (#{poetry.content}, #{poetry.origin}, #{poetry.author}, #{poetry.category}, #{poetry.createTime})
+    </insert>
+
     <delete id="delEmp">
-        DELETE FROM employee
-		WHERE id = #{id}
+        DELETE
+        FROM employee
+        WHERE id = #{id}
     </delete>
 
     <update id="updateEmp" parameterType="com.cpl.tsl.bean.Employee">

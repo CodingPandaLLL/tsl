@@ -3,6 +3,7 @@ package com.cpl.tsl.controller;
 
 import com.cpl.tsl.bean.Employee;
 import com.cpl.tsl.bean.EmployeeVo;
+import com.cpl.tsl.bean.Poetry;
 import com.cpl.tsl.bean.base.ResultMap;
 import com.cpl.tsl.service.EmployeeService;
 import io.swagger.annotations.Api;
@@ -44,6 +45,21 @@ public class EmployeeController {
             resultMap.setStatus("500");
             resultMap.setMessage("保存失败");
         }
+        return resultMap;
+    }
+
+    @RequestMapping(value = "/poetry", method = RequestMethod.POST)
+    @ApiOperation(value = "增加诗词", notes = "增加增加诗词信息")
+    public ResultMap savePoetry(@RequestBody @ApiParam(required = true, value = "诗词对接") Poetry poetry) {
+        ResultMap resultMap = new ResultMap();
+//        try {
+            employeeService.savePoetry(poetry);
+            resultMap.setStatus("200");
+            resultMap.setMessage("保存成功");
+//        } catch (Exception e) {
+//            resultMap.setStatus("500");
+//            resultMap.setMessage("保存失败");
+//        }
         return resultMap;
     }
 
