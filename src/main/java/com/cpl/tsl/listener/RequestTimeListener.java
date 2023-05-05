@@ -1,6 +1,7 @@
 package com.cpl.tsl.listener;
 
 import com.cpl.tsl.bean.base.ResultMap;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,8 +29,8 @@ public class RequestTimeListener {
     //拦截解析结果类
     private final String resultMapName = "com.cpl.tsl.bean.base.ResultMap";
 
-    //超时时间15秒
-    private final Integer outTime = 15;
+    @Value(value = "${noRequestTimeOutTime:15}")
+    private Integer outTime;
 
     //应用层不限制超时时间的URL集合
     @Value(value = "${noRequestTimeLimitUrl:null}")
@@ -40,23 +41,93 @@ public class RequestTimeListener {
      */
     @Around("execution(* com.cpl.tsl.controller..*.*(..))")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        /**
+         * 方法一：需要在执行完成后才能判断，接口实际时长已经超出15s,并没有真正熔断
+         */
+//        try {
+//            RequestAttributes ra = RequestContextHolder.getRequestAttributes();
+//            ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+//            assert sra != null;
+//            HttpServletRequest request = sra.getRequest();
+//            final String uri = request.getRequestURI();
+//            //不限制请求时长的接口不予处理
+//            if (noRequestTimeLimitUrl != null && noRequestTimeLimitUrl.split(",").length > 0) {
+//                String[] urls = noRequestTimeLimitUrl.split(",");
+//                for (int i = 0; i < urls.length; i++) {
+//                    if (uri.endsWith(urls[i])) {
+//                        return joinPoint.proceed();
+//                    }
+//                }
+//            }
+//            long startTimeMillis = System.currentTimeMillis();
+//            //调用 proceed() 方法才会真正的执行实际被代理的方法
+//            Object result = joinPoint.proceed();
+//            long execTimeMillis = System.currentTimeMillis() - startTimeMillis;
+//            //判断接口超时熔断
+//            if (execTimeMillis > outTime) {
+//                return SwaggerResultUtil.error500("接口响应时间超过15S,请求被拒绝！");
+//            } else {
+//                return result;
+//            }
+//        } catch (Exception exception) {
+//            return joinPoint.proceed();
+//        }
+
+        /**
+         * 方法二
+         */
+        SystemLocalContext systemLocalContext = new SystemLocalContext();
         ExecutorService ex = Executors.newScheduledThreadPool(Integer.MAX_VALUE);
+        //封装systemLocalContext信息
+//        systemLocalContext.setZhId(SystemContext.getZhId());
+//        systemLocalContext.setZhm(SystemContext.getZhm());
+//        systemLocalContext.setSfId(SystemContext.getSfId());
+//        systemLocalContext.setRysfmc(SystemContext.getRysfmc());
+//        systemLocalContext.setRysfdm(SystemContext.getRysfdm());
+//        systemLocalContext.setBmmc(SystemContext.getBmmc());
+//        systemLocalContext.setBmdm(SystemContext.getBmdm());
+//        systemLocalContext.setBmId(SystemContext.getBmId());
+//        systemLocalContext.setRyxm(SystemContext.getRyxm());
+//        systemLocalContext.setToken(SystemContext.getToken());
+//        systemLocalContext.setIsSuperAdmin(SystemContext.isSuperAdmin());
+//        systemLocalContext.setJsdj(SystemContext.getJsdj());
+//        systemLocalContext.setJsId(SystemContext.getJsId());
+//        systemLocalContext.setIp(SystemContext.getIp());
+//        systemLocalContext.setSsoUser(SystemContext.getSystemSsoUser());
+//        systemLocalContextInheritableThreadLocal.set(systemLocalContext);
         final Future<Object> future = ex.submit(() -> {
-            //设置在子线程中传递上下文
-            RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-            RequestContextHolder.setRequestAttributes(requestAttributes, true);
             try {
+                //子线程赋值现场上下文
+                //封装systemLocalContext信息
+//                SystemContext.setZhId(systemLocalContextInheritableThreadLocal.get().getZhId());
+//                SystemContext.setZhm(systemLocalContextInheritableThreadLocal.get().getZhm());
+//                SystemContext.setSfId(systemLocalContextInheritableThreadLocal.get().getSfId());
+//                SystemContext.setRysfmc(systemLocalContextInheritableThreadLocal.get().getRysfmc());
+//                SystemContext.setRysfdm(systemLocalContextInheritableThreadLocal.get().getRysfdm());
+//                SystemContext.setBmmc(systemLocalContextInheritableThreadLocal.get().getBmmc());
+//                SystemContext.setBmdm(systemLocalContextInheritableThreadLocal.get().getBmdm());
+//                SystemContext.setBmId(systemLocalContextInheritableThreadLocal.get().getBmId());
+//                SystemContext.setRyxm(systemLocalContextInheritableThreadLocal.get().getRyxm());
+//                SystemContext.setToken(systemLocalContextInheritableThreadLocal.get().getToken());
+//                SystemContext.setIsSuperAdmin(systemLocalContextInheritableThreadLocal.get().getIsSuperAdmin());
+//                SystemContext.setJsdj(systemLocalContextInheritableThreadLocal.get().getJsdj());
+//                SystemContext.setJsId(systemLocalContextInheritableThreadLocal.get().getJsId());
+//                SystemContext.setIp(systemLocalContextInheritableThreadLocal.get().getIp());
+//                SystemContext.setSystemSsoUser(systemLocalContextInheritableThreadLocal.get().getSsoUser());
                 return joinPoint.proceed();
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         });
         try {
-            RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
-            ServletRequestAttributes sra = (ServletRequestAttributes) ra;
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            RequestContextHolder.setRequestAttributes(requestAttributes, true);
+            ServletRequestAttributes sra = (ServletRequestAttributes) requestAttributes;
             assert sra != null;
-            HttpServletRequest request = sra.getRequest();
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
             final String uri = request.getRequestURI();
+
             //不限制请求时长的接口不予处理
             if (noRequestTimeLimitUrl != null && noRequestTimeLimitUrl.split(",").length > 0) {
                 String[] urls = noRequestTimeLimitUrl.split(",");
@@ -80,6 +151,76 @@ public class RequestTimeListener {
             }
         }
     }
+}
+
+/**
+ * 内部类：传递现场上下文
+ *
+ * @author: lll
+ * @date: 2023年05月05日 10:05:58
+ */
+@Data
+class SystemLocalContext {
+
+//    private SystemSsoUser ssoUser;
+    /**
+     * 账户ID
+     */
+    private String zhId;
+    /**
+     * 账户名
+     */
+    private String zhm;
+    /**
+     * 身份ID
+     */
+    private String sfId;
+    /**
+     * 身份名称
+     */
+    private String rysfmc;
+    /**
+     * 身份代码
+     */
+    private String rysfdm;
+    /**
+     * 部门名称
+     */
+    private String bmmc;
+    /**
+     * 部门代码
+     */
+    private String bmdm;
+    /**
+     * 人员姓名
+     */
+    private String ryxm;
+    /**
+     * 部门id
+     */
+    private String bmId;
+    /**
+     * token
+     */
+    private String token;
+    /**
+     * 是否超级管理员
+     */
+    private Boolean isSuperAdmin;
+    /**
+     * 角色等级
+     */
+    private String jsdj;
+    /**
+     * 角色id
+     *
+     * @return
+     */
+    private String jsId;
+    /**
+     * IP
+     */
+    private String ip;
 
 }
 
