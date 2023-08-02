@@ -4,8 +4,10 @@ import com.cpl.tsl.bean.base.ResultMap;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -13,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.concurrent.*;
 
 /**
@@ -35,6 +38,8 @@ public class RequestTimeListener {
     //应用层不限制超时时间的URL集合
     @Value(value = "${noRequestTimeLimitUrl:null}")
     public String noRequestTimeLimitUrl;
+
+    private static InheritableThreadLocal<SystemLocalContext> systemLocalContextInheritableThreadLocal = new InheritableThreadLocal<>();
 
     /**
      * 在请求之中拦截获取拦截
@@ -77,6 +82,17 @@ public class RequestTimeListener {
         /**
          * 方法二
          */
+        //返回类型
+        String resultClassName = "";
+        Signature signature = joinPoint.getSignature();
+        if (signature instanceof MethodSignature) {
+            MethodSignature methodSignature = (MethodSignature) signature;
+            // 被切的方法
+            Method method = methodSignature.getMethod();
+            // 返回类型
+            Class<?> methodReturnType = method.getReturnType();
+            resultClassName = methodReturnType.getName();
+        }
         SystemLocalContext systemLocalContext = new SystemLocalContext();
         ExecutorService ex = Executors.newScheduledThreadPool(Integer.MAX_VALUE);
         //封装systemLocalContext信息
@@ -95,7 +111,12 @@ public class RequestTimeListener {
 //        systemLocalContext.setJsId(SystemContext.getJsId());
 //        systemLocalContext.setIp(SystemContext.getIp());
 //        systemLocalContext.setSsoUser(SystemContext.getSystemSsoUser());
-//        systemLocalContextInheritableThreadLocal.set(systemLocalContext);
+        systemLocalContextInheritableThreadLocal.set(systemLocalContext);
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        RequestContextHolder.setRequestAttributes(requestAttributes, true);
+        ServletRequestAttributes sra = (ServletRequestAttributes) requestAttributes;
+        assert sra != null;
+        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         final Future<Object> future = ex.submit(() -> {
             try {
                 //子线程赋值现场上下文
@@ -121,13 +142,7 @@ public class RequestTimeListener {
             }
         });
         try {
-            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            RequestContextHolder.setRequestAttributes(requestAttributes, true);
-            ServletRequestAttributes sra = (ServletRequestAttributes) requestAttributes;
-            assert sra != null;
-            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
             final String uri = request.getRequestURI();
-
             //不限制请求时长的接口不予处理
             if (noRequestTimeLimitUrl != null && noRequestTimeLimitUrl.split(",").length > 0) {
                 String[] urls = noRequestTimeLimitUrl.split(",");
@@ -143,11 +158,12 @@ public class RequestTimeListener {
         } catch (ExecutionException e) {
             return joinPoint.proceed();
         } catch (TimeoutException e) {
-            //常规返回结果
-            if (joinPoint.proceed().getClass().getName().equals(resultMapName)) {
-                return ResultMap.resultError("500", "接口响应时间超过" + outTime + "S,请求被拒绝！");
+            //遗留问题：非SwaggerResultUtil接口无法监控到时长
+            if (resultClassName.equals(resultMapName)) {
+                return ResultMap.resultError("500","接口响应时间超过" + outTime + "S,请求被拒绝！");
             } else {
-                return joinPoint.proceed();
+                throw new TimeoutException("接口响应时间超过" + outTime + "S,请求被拒绝！");
+//                return joinPoint.proceed();
             }
         }
     }
