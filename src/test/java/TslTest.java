@@ -1,5 +1,6 @@
 import com.cpl.tsl.TslApplication;
 import com.cpl.tsl.service.EmployeeService;
+import com.cpl.tsl.utils.ReadTxt;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,8 @@ public class TslTest {
 
     @Test
     public void test() {
-        System.out.println( employeeService.getAllEmp());
+        String filePath = "D:\\LLL\\2.txt";
+//      "res/";
+        ReadTxt.readTxtFile(filePath);
     }
 }

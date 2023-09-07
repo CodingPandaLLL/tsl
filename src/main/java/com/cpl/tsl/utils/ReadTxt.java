@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.UUID;
 
 /**
  * 读取文件
@@ -30,11 +31,25 @@ public class ReadTxt {
                         new FileInputStream(file),encoding);//考虑到编码格式
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String lineTxt = null;
+                int i=50;
                 while((lineTxt = bufferedReader.readLine()) != null){
-                    System.out.println("开始读取：");
-                    System.out.println(lineTxt);
-                    System.out.println("等待2秒，开始下一个");
-                    Thread.currentThread().sleep(2000);
+                    String[] linArr=lineTxt.split("\\|");
+                    String bmdm="BM8"+String.format("%08d", i);
+                    i++;
+                    String id= UUID.randomUUID().toString().replace("-","");
+                    //市直
+                    /*String sql="INSERT INTO `cestc_dportal_yanshi`.`MH_SS_BM` (`ID`, `BMDM`, `BMMC`, `BMJC`, `BMBZ`, `SJBMDM`, `BMCJDM`, `YZBM`, `BMDZ`, `BMDIANHUA`, `CZ`, `DZXX`, `XZQHDM`, `FZR`, `YXBZ`, `ZYZZKJMC`, " +
+                            "`ZYZZKJDM`, `ZYZZKJLXDM`, `ZYZZKJLXMC`, `BMLX`, `YXQKSRQ`, `YXQJSRQ`, `BMMS`, `SFSC`, `BBH`, `CJR_ID`, `CJSJ`, `XGR_ID`, `XGSJ`, `SJBMID`, `XH`, `SJLY`, `TYSHXYDM`, `XZQHCODE`, `XZQHNAME`, " +
+                            "`SJGWYBMDM`, `SJQX`, `ZZCJ`, `XNZZ`, `ZYYWZDBMDM`, `SJYWBMDM`, `SJZZCJ`) VALUES " +
+                            "('"+id+"', '"+bmdm+"', '"+linArr[1]+"', '"+linArr[1]+"', NULL, '01800000000', '02', '', '"+linArr[8]+"', '', NULL, NULL, NULL, '', 'Y', NULL, NULL, NULL, NULL, '01', '1690684269930', '4102329600000'," +
+                            " NULL, 'N', '0', NULL, NULL, '02023080215114578900000101687555', '1691396724625', '02022112317160202100000101348439', NULL, NULL, '"+linArr[7]+"', '51', '四川省', '"+linArr[9]+"', NULL, '2', 'N', '"+linArr[5]+"', '', NULL);";*/
+                    //三级
+                    String sql="INSERT INTO `cestc_dportal_yanshi`.`MH_SS_BM` (`ID`, `BMDM`, `BMMC`, `BMJC`, `BMBZ`, `SJBMDM`, `BMCJDM`, `YZBM`, `BMDZ`, `BMDIANHUA`, `CZ`, `DZXX`, `XZQHDM`, `FZR`, `YXBZ`, `ZYZZKJMC`, " +
+                            "`ZYZZKJDM`, `ZYZZKJLXDM`, `ZYZZKJLXMC`, `BMLX`, `YXQKSRQ`, `YXQJSRQ`, `BMMS`, `SFSC`, `BBH`, `CJR_ID`, `CJSJ`, `XGR_ID`, `XGSJ`, `SJBMID`, `XH`, `SJLY`, `TYSHXYDM`, `XZQHCODE`, `XZQHNAME`, " +
+                            "`SJGWYBMDM`, `SJQX`, `ZZCJ`, `XNZZ`, `ZYYWZDBMDM`, `SJYWBMDM`, `SJZZCJ`) VALUES " +
+                            "('"+id+"', '"+bmdm+"', '"+linArr[1]+"', '"+linArr[1]+"', NULL, 'BM800000049', '03', '', '"+linArr[8]+"', '', NULL, NULL, NULL, '', 'Y', NULL, NULL, NULL, NULL, '01', '1690684269930', '4102329600000'," +
+                            " NULL, 'N', '0', NULL, NULL, '02023080215114578900000101687555', '1691396724625', '02022112317160202100000101348439', NULL, NULL, '"+linArr[7]+"', '51', '四川省', '"+linArr[9]+"', NULL, '2', 'N', '"+linArr[5]+"', '', NULL);";
+                    System.out.println(sql);
                 }
                 read.close();
             }else{
@@ -48,7 +63,7 @@ public class ReadTxt {
     }
 
     public static void main(String argv[]){
-        String filePath = "D:\\LLL\\20220404.log";
+        String filePath = "D:\\LLL\\1.txt";
 //      "res/";
         readTxtFile(filePath);
     }

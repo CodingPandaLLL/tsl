@@ -32,7 +32,7 @@ public class RequestTimeListener {
     //拦截解析结果类
     private final String resultMapName = "com.cpl.tsl.bean.base.ResultMap";
 
-    @Value(value = "${noRequestTimeOutTime:15}")
+    @Value(value = "${noRequestTimeOutTime:1500000}")
     private Integer outTime;
 
     //应用层不限制超时时间的URL集合
